@@ -1,12 +1,10 @@
 
 # coding: utf-8
 
-# In[1]:
+# In[ ]:
 
 
 import requests
-import re
-import random
 import configparser
 from bs4 import BeautifulSoup
 from flask import Flask, request, abort
@@ -21,7 +19,7 @@ from linebot.exceptions import (
 from linebot.models import *
 
 
-# In[2]:
+# In[9]:
 
 
 app = Flask(__name__)
@@ -29,50 +27,37 @@ config = configparser.ConfigParser()
 config.read("config.ini")
 
 
-# In[3]:
-
+# In[10]:
 
 
 line_bot_api = LineBotApi('gEd5m4sXZAnpxQ3qYdncBsx5zq0Hw9SyZkpSnfrr4DuutHtW1btEjuJ04+cu2k2yp9wNDPrdU1luU4Kq+vOykCsRmQm1E3YYP0037puK9EMRZFkBl4PFGmpv1Zq2m4jF2QWtIlAK0edGHxmpQnoFngdB04t89/1O/w1cDnyilFU=')
 handler = WebhookHandler('b7e44ac55197b90ef44413e52768c000')
 
 
-# In[4]:
+# In[ ]:
 
 
 @app.route("/callback", methods=['POST'])
 def callback():
     # get X-Line-Signature header value
     signature = request.headers['X-Line-Signature']
-
     # get request body as text
     body = request.get_data(as_text=True)
     # print("body:",body)
     app.logger.info("Request body: " + body)
-
     # handle webhook body
     try:
         handler.handle(body, signature)
     except InvalidSignatureError:
         abort(400)
-
     return 'ok'
 
-
-# In[5]:
-
-
 def pattern_mega(text):
-    patterns = ['mega', 'mg', 'mu', 'ＭＥＧＡ', 'ＭＥ', 'ＭＵ',
-        'ｍｅ', 'ｍｕ', 'ｍｅｇａ', 'GD', 'MG', 'google',]
+    patterns = ['mega', 'mg', 'mu', 'ＭＥＧＡ', 'ＭＥ', 'ＭＵ','ｍｅ', 'ｍｕ', 'ｍｅｇａ', 'GD', 'MG', 'google',]
     for pattern in patterns:
         if re.search(pattern, text, re.IGNORECASE):
             return True
-
-
-# In[6]:
-
-
+        
 def topvip():
     target_url = 'https://www.taishinbank.com.tw/TS/TS02/TS0201/TS020101/TS02010101/TS0201010101/index.htm'
     print('Start parsing 頂級尊榮....')
@@ -153,10 +138,6 @@ def article():
         content += '{}\n{}\n\n'.format(title, link)
     return content
 
-
-# In[7]:
-
-
 def visa_intro():
     target_url = 'https://www.taishinbank.com.tw/TS/TS02/TS0201/TS020101/TS02010103/index.htm'
     print('Start parsing visa金融卡_卡片介紹....')
@@ -189,10 +170,6 @@ def visa_know():
         content += '{}\n{}\n\n'.format(title, link)
     return content
 
-
-# In[8]:
-
-
 def creditserve():
     target_url = 'https://www.taishinbank.com.tw/TS/TS02/TS0201/TS020101/TS02010104/index.htm'
     print('Start parsing 商戶收單服務....')
@@ -210,7 +187,7 @@ def creditserve():
     return content
 
 
-# In[11]:
+# In[12]:
 
 
 @handler.add(MessageEvent, message=TextMessage)
@@ -251,22 +228,6 @@ def handle_message(event):
         return 0
     
     
-    if event.message.text == "個人金融":
-        buttons_template = TemplateSendMessage(alt_text='個人金融 template',
-                                               template=ButtonsTemplate(title='選擇服務',text='請選擇',
-                                                                        thumbnail_image_url='http://moneyclassicresearch.com/blog/wp-content/uploads/2017/12/intraday-trading-2.jpg',
-                                                                        actions=[MessageTemplateAction(label='信用卡',text='信用卡'),
-                                                                                 MessageTemplateAction(label='存款',text='存款'),
-                                                                                 MessageTemplateAction(label='貸款',text='貸款'),
-                                                                                 MessageTemplateAction(label='投資',text='投資'),
-                                                                                 MessageTemplateAction(label='保險',text='保險'),
-                                                                                 MessageTemplateAction(label='財富管理',text='財富管理'),
-                                                                                 MessageTemplateAction(label='自動化服務',text='自動化服務'),
-                                                                                 MessageTemplateAction(label='線上櫃台',text='線上櫃台')]))
-        line_bot_api.reply_message(event.reply_token, buttons_template)
-        return 0  
-    
-
     if event.message.text == "信用卡介紹":
         buttons_template = TemplateSendMessage(alt_text='信用卡介紹 template',
                                                template=ButtonsTemplate(title='選擇卡種',text='請選擇',
@@ -306,7 +267,7 @@ def handle_message(event):
                                                                                  URITemplateAction(label='信用卡權益',uri='https://www.taishinbank.com.tw/TS/TS02/TS0201/TS020101/TS02010102/index.htm'),
                                                                                  MessageTemplateAction(label='VISA金融卡',text='VISA金融卡'),
                                                                                  MessageTemplateAction(label='商戶收單服務',text='商戶收單服務'),
-                                                                                 URITemplateAction(label='ApplePay',uri='https://mkp.taishinbank.com.tw/TsCms/marketing/expose/WM_20171123163746660/index.html'),
+                                                                                 URITemplateAction(label='ApplePay',url='https://mkp.taishinbank.com.tw/TsCms/marketing/expose/WM_20171123163746660/index.html'),
                                                                                  URITemplateAction(label='SamsungPay',uri='https://mkp.taishinbank.com.tw/TsCms/marketing/expose/WM_20170831104709577/index.html'),
                                                                                  URITemplateAction(label='AndroidPay',uri='https://mkp.taishinbank.com.tw/TsCms/marketing/expose/WM_20170928144417314/index.html')]))
         line_bot_api.reply_message(event.reply_token, buttons_template)
@@ -322,7 +283,6 @@ def handle_message(event):
                                                                              URITemplateAction(label='法人金融',uri='https://www.taishinbank.com.tw/TS/TS04/index.htm'),
                                                                              URITemplateAction(label='海外分子行',uri='https://www.taishinbank.com.tw/TS/TS05/index.htm')]))
     line_bot_api.reply_message(event.reply_token, buttons_template)
-    
 
 
 # In[ ]:
