@@ -1,10 +1,12 @@
 
 # coding: utf-8
 
-# In[ ]:
+# In[6]:
 
 
 import requests
+import re
+import random
 import configparser
 from bs4 import BeautifulSoup
 from flask import Flask, request, abort
@@ -19,22 +21,24 @@ from linebot.exceptions import (
 from linebot.models import *
 
 
-# In[9]:
+# In[7]:
 
 
 app = Flask(__name__)
-config = configparser.ConfigParser()
-config.read("config.ini")
 
 
-# In[10]:
+# In[8]:
 
 
+#line_bot_api = LineBotApi('gEd5m4sXZAnpxQ3qYdncBsx5zq0Hw9SyZkpSnfrr4DuutHtW1btEjuJ04+cu2k2yp9wNDPrdU1luU4Kq+vOykCsRmQm1E3YYP0037puK9EMRZFkBl4PFGmpv1Zq2m4jF2QWtIlAK0edGHxmpQnoFngdB04t89/1O/w1cDnyilFU=')
+#handler = WebhookHandler('b7e44ac55197b90ef44413e52768c000')
 line_bot_api = LineBotApi('gEd5m4sXZAnpxQ3qYdncBsx5zq0Hw9SyZkpSnfrr4DuutHtW1btEjuJ04+cu2k2yp9wNDPrdU1luU4Kq+vOykCsRmQm1E3YYP0037puK9EMRZFkBl4PFGmpv1Zq2m4jF2QWtIlAK0edGHxmpQnoFngdB04t89/1O/w1cDnyilFU=')
 handler = WebhookHandler('b7e44ac55197b90ef44413e52768c000')
+client_id = ('maggie2009612@gmail.com')
+client_secret = ('Maggie3183399168')
 
 
-# In[ ]:
+# In[9]:
 
 
 @app.route("/callback", methods=['POST'])
@@ -187,7 +191,7 @@ def creditserve():
     return content
 
 
-# In[12]:
+# In[ ]:
 
 
 @handler.add(MessageEvent, message=TextMessage)
@@ -231,7 +235,7 @@ def handle_message(event):
     if event.message.text == "信用卡介紹":
         buttons_template = TemplateSendMessage(alt_text='信用卡介紹 template',
                                                template=ButtonsTemplate(title='選擇卡種',text='請選擇',
-                                                                        thumbnail_image_url='http://adyblaze.com/wp-content/uploads/2017/09/16-1474009665-multiple-credit-cards.jpg',
+                                                                        thumbnail_image_url='https://i.imgur.com/oeMEirX.jpg',
                                                                         actions=[MessageTemplateAction(label='頂級尊榮',text='頂級尊榮'),
                                                                                  MessageTemplateAction(label='太陽玫瑰',text='太陽玫瑰'),
                                                                                  MessageTemplateAction(label='百貨量販',text='百貨量販'),
@@ -244,7 +248,7 @@ def handle_message(event):
     if event.message.text == "VISA金融卡":
         buttons_template = TemplateSendMessage(alt_text='VISA金融卡 template',
                                                template=ButtonsTemplate(title='選擇服務',text='請選擇',
-                                                                        thumbnail_image_url='https://www.taishinbank.com.tw/cs/groups/1101-%E4%BF%A1%E7%94%A8%E5%8D%A1%E4%BB%8B%E7%B4%B9/documents/document/tsbc0151506.png',
+                                                                        thumbnail_image_url='https://i.imgur.com/ayjQVPm.png',
                                                                         actions=[MessageTemplateAction(label='visa金融卡_卡片介紹',text='visa金融卡_卡片介紹'),
                                                                                  MessageTemplateAction(label='visa金融卡_用卡須知',text='visa金融卡_用卡須知')]))
         line_bot_api.reply_message(event.reply_token, buttons_template)
@@ -253,7 +257,7 @@ def handle_message(event):
     if event.message.text == "商戶收單服務":
         buttons_template = TemplateSendMessage(alt_text='商戶收單服務 template',
                                                template=ButtonsTemplate(title='選擇服務',text='請選擇',
-                                                                        thumbnail_image_url='http://c004-old.wzu.edu.tw/ezcatfiles/c004/img/img/740/service.jpg',
+                                                                        thumbnail_image_url='https://i.imgur.com/hfvRaU5.jpg',
                                                                         actions=[MessageTemplateAction(label='商戶收單服務',text='商戶收單服務')]))
         line_bot_api.reply_message(event.reply_token, buttons_template)
         return 0  
@@ -262,7 +266,7 @@ def handle_message(event):
     if event.message.text == "信用卡":
         buttons_template = TemplateSendMessage(alt_text='信用卡 template',
                                                template=ButtonsTemplate(title='選擇服務',text='請選擇',
-                                                                        thumbnail_image_url='https://www.nccc.com.tw/creditcard/images/hand.png',
+                                                                        thumbnail_image_url='https://i.imgur.com/PZt0ijH.png',
                                                                         actions=[MessageTemplateAction(label='信用卡介紹',text='信用卡介紹'),
                                                                                  URITemplateAction(label='信用卡權益',uri='https://www.taishinbank.com.tw/TS/TS02/TS0201/TS020101/TS02010102/index.htm'),
                                                                                  MessageTemplateAction(label='VISA金融卡',text='VISA金融卡'),
@@ -277,7 +281,7 @@ def handle_message(event):
     
     buttons_template = TemplateSendMessage(alt_text='目錄 template',
                                            template=ButtonsTemplate(title='選擇服務',text='請選擇',
-                                                                    thumbnail_image_url='http://www.ecis.com.tw/images/taishin_01.jpg',
+                                                                    thumbnail_image_url='https://i.imgur.com/iq7eFeI.jpg',
                                                                     actions=[MessageTemplateAction(label='個人金融',text='個人金融'),
                                                                              URITemplateAction(label='微型企業',uri='https://www.taishinbank.com.tw/TS/TS03/index.htm'),
                                                                              URITemplateAction(label='法人金融',uri='https://www.taishinbank.com.tw/TS/TS04/index.htm'),
