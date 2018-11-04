@@ -30,11 +30,10 @@ app = Flask(__name__)
 # In[8]:
 
 
-#line_bot_api = LineBotApi('gEd5m4sXZAnpxQ3qYdncBsx5zq0Hw9SyZkpSnfrr4DuutHtW1btEjuJ04+cu2k2yp9wNDPrdU1luU4Kq+vOykCsRmQm1E3YYP0037puK9EMRZFkBl4PFGmpv1Zq2m4jF2QWtIlAK0edGHxmpQnoFngdB04t89/1O/w1cDnyilFU=')
-#handler = WebhookHandler('b7e44ac55197b90ef44413e52768c000')
-line_bot_api = LineBotApi('gEd5m4sXZAnpxQ3qYdncBsx5zq0Hw9SyZkpSnfrr4DuutHtW1btEjuJ04+cu2k2yp9wNDPrdU1luU4Kq+vOykCsRmQm1E3YYP0037puK9EMRZFkBl4PFGmpv1Zq2m4jF2QWtIlAK0edGHxmpQnoFngdB04t89/1O/w1cDnyilFU=')
-handler = WebhookHandler('b7e44ac55197b90ef44413e52768c000')
-client_id = ('maggie2009612@gmail.com')
+
+line_bot_api = LineBotApi('')
+handler = WebhookHandler('')
+client_id = ('')
 client_secret = ('')
 
 
